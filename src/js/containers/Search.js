@@ -60,7 +60,7 @@ const mapStateToProps = state => {
   
   const gifs = _.map(state.search.data, id => {
     return {
-      isFavorite: state.favorites.ids[id],
+      isFavorite: state.favorites.present[id],
       ...state.gifs[id]
     };
   });

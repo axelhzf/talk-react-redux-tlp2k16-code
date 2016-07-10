@@ -44,7 +44,7 @@ class Favorite extends React.Component {
 
 const mapStateToProps = state => {
   
-  const gifs = _.map(_.keys(state.favorites.ids), id => {
+  const gifs = _.map(_.keys(state.favorites.present), id => {
     return {
       isFavorite: true,
       ...state.gifs[id]

@@ -79,14 +79,16 @@ export default function reducer(state, action) {
   
     case actions.TOGGLE_FAVORITE:
       const id = action.id;
-      const isFavorite = state.favorites.ids[id];
+      const isFavorite = state.favorites.present[id];
+      const oldValue = state.favorites.present;
       const newValue = isFavorite ?
-        _.omit(state.favorites.ids, id) :
-      {[id]: true, ...state.favorites.ids};
+        _.omit(state.favorites.present, id) :
+      {[id]: true, ...state.favorites.present};
     
       return update(state, {
         favorites: {
-          ids: {$set: newValue},
+          present: {$set: newValue},
+          past: {$unshift: [oldValue]}
         }
       });
   
@@ -104,6 +106,16 @@ export default function reducer(state, action) {
       return update(state, {
         notification: {
           visible: {$set: false}
+        }
+      });
+  
+    case actions.UNDO:
+      if (state.favorites.past.length === 0) return state;
+    
+      return update(state, {
+        favorites: {
+          present: {$set: _.first(state.favorites.past)},
+          past: {$set: state.favorites.past.slice(1)}
         }
       });
     

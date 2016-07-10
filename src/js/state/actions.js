@@ -11,6 +11,7 @@ export const FETCH_FAVORITES_ERROR = "FETCH_FAVORITES_ERROR";
 export const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
 export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
 export const HIDE_NOTIFICATION = "HIDE_NOTIFICATION";
+export const UNDO = "UNDO";
 
 export const changeTab = tab => ({type: CHANGE_TAB, tab: tab});
 
@@ -63,5 +64,13 @@ export const showNotification = msg => dispatch => {
 const hideNotification = _.debounce(dispatch => {
   dispatch({type: HIDE_NOTIFICATION});
 }, 3000);
+
+export const undo = () => dispatch => {
+  const state = store.getState();
+  if (state.favorites.past.length > 0) {
+    dispatch({type: UNDO});
+    dispatch(showNotification("Undo!"));
+  }
+};
 
 export const toggleFav = id => ({type: TOGGLE_FAVORITE, id});

@@ -11,8 +11,16 @@ import {mouseTrap} from "react-mousetrap"
 
 class App extends React.Component {
   
+  componentDidMount() {
+    this.props.bindShortcut(['command+z', 'ctrl+z'], this.onUndo);
+  }
+  
   onChangeTab = tab => {
     this.props.dispatch(actions.changeTab(tab));
+  };
+  
+  onUndo = () => {
+    this.props.dispatch(actions.undo());
   };
   
   render() {
@@ -42,8 +50,8 @@ const mapStateToProps = state => {
   return {
     activeTab: state.tabs.active,
     notification: state.notification,
-    totalFavorites: _.keys(state.favorites.ids).length
+    totalFavorites: _.keys(state.favorites.present).length
   }
 };
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(mouseTrap(App))

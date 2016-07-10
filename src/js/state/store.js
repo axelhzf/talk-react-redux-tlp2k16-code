@@ -19,7 +19,8 @@ const initialState = {
   favorites: {
     isFetching: false,
     error: undefined,
-    ids: {}
+    present: {},
+    past: []
   },
   notification: {
     visible: false,
