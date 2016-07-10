@@ -13,6 +13,12 @@ const initialState = {
     data: [],
     error: undefined
   },
+  favorites: {
+    isFetching: false,
+    error: undefined,
+    ids: ["fIENURRmYtunu", "c4Nc0v0g15g9G"],
+    data: []
+  },
 };
 
 const store = createStore(

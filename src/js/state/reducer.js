@@ -43,6 +43,37 @@ export default function reducer(state, action) {
           }
         }
       });
+  
+    case actions.FETCH_FAVORITES_REQUEST:
+      return update(state, {
+        favorites: {
+          $merge: {
+            isFetching: true,
+            error: undefined,
+            data: []
+          }
+        }
+      });
+  
+    case actions.FETCH_FAVORITES_SUCCESS:
+      const favoriteGifs = _.map(action.data, (gif) => ({id: gif.id, url: gif.images.fixed_height.url}));
+      return update(state, {
+        favorites: {
+          $merge: {
+            isFetching: false,
+            data: favoriteGifs
+          }},
+      });
+  
+    case actions.FETCH_FAVORITES_ERROR:
+      return update(state, {
+        favorites: {
+          $merge: {
+            isFetching: false,
+            error: action.error.message
+          }
+        }
+      });
     
   }
   return state;
