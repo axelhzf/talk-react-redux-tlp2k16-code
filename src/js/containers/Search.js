@@ -54,10 +54,10 @@ class Search extends React.Component {
 
 const mapStateToProps = state => {
   
-  const gifs = _.map(state.search.data, gif => {
+  const gifs = _.map(state.search.data, id => {
     return {
-      isFavorite: state.favorites.ids[gif.id],
-      ...gif
+      isFavorite: state.favorites.ids[id],
+      ...state.gifs[id]
     };
   });
   

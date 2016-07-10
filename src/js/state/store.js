@@ -7,6 +7,9 @@ const initialState = {
   tabs: {
     active: "search"
   },
+  gifs: {
+    
+  },
   search: {
     query: "",
     isFetching: false,
@@ -16,8 +19,7 @@ const initialState = {
   favorites: {
     isFetching: false,
     error: undefined,
-    ids: {},
-    data: []
+    ids: {}
   },
 };
 

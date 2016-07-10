@@ -34,15 +34,16 @@ export const fetchSearch = (query) => async(dispatch) => {
 export const fetchFavorites = () => async(dispatch) => {
   try {
     dispatch({type: FETCH_FAVORITES_REQUEST});
-    
+  
     const state = store.getState();
-    const ids = _.keys(state.favorites.ids);
-    
-    if (ids.length === 0) { // all ids already fetched
+    const favoritesIds = _.keys(state.favorites.ids);
+    const gifsToFetch = _.filter(favoritesIds, id => !state.gifs[id]);
+  
+    if (gifsToFetch.length === 0) { // all ids already fetched
       return dispatch({type: FETCH_FAVORITES_SUCCESS, data: []});
     }
     
-    const url = `http://api.giphy.com/v1/gifs?ids=${ids.join(",")}&api_key=dc6zaTOxFJmzC`;
+    const url = `http://api.giphy.com/v1/gifs?ids=${gifsToFetch.join(",")}&api_key=dc6zaTOxFJmzC`;
     const response = await fetch(url);
     const body = await response.json();
     

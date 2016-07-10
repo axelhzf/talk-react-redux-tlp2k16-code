@@ -25,13 +25,16 @@ export default function reducer(state, action) {
   
     case actions.FETCH_SEARCH_SUCCESS:
       const gifs = _.map(action.data, (gif) => ({id: gif.id, url: gif.images.fixed_height.url}));
+      const gifsById = _.keyBy(gifs, "id");
+      const ids = _.keys(gifsById);
       return update(state, {
         search: {
           $merge: {
             isFetching: false,
-            data: gifs
+            data: ids
           }
-        }
+        },
+        gifs: {$merge: gifsById}
       });
   
     case actions.FETCH_SEARCH_ERROR:
@@ -55,15 +58,14 @@ export default function reducer(state, action) {
         }
       });
   
-    case actions.FETCH_FAVORITES_SUCCESS:
-      const favoriteGifs = _.map(action.data, (gif) => ({id: gif.id, url: gif.images.fixed_height.url}));
+    case actions.FETCH_FAVORITES_SUCCESS: {
+      const gifs = _.map(action.data, (gif) => ({id: gif.id, url: gif.images.fixed_height.url}));
+      const gifsById = _.keyBy(gifs, "id");
       return update(state, {
-        favorites: {
-          $merge: {
-            isFetching: false,
-            data: favoriteGifs
-          }},
+        favorites: { $merge: {isFetching: false} },
+        gifs: {$merge: gifsById}
       });
+    }
   
     case actions.FETCH_FAVORITES_ERROR:
       return update(state, {
