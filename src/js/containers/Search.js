@@ -24,6 +24,10 @@ class Search extends React.Component {
     this.props.dispatch(actions.toggleFav(gif.id));
   };
   
+  onCopy = gif => {
+    this.props.dispatch(actions.showNotification(`Copied ${gif.url}`));
+  };
+  
   render() {
     const {gifs, isFetching, query, error} = this.props;
     

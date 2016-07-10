@@ -17,6 +17,10 @@ class Favorite extends React.Component {
     this.props.dispatch(actions.toggleFav(gif.id));
   };
   
+  onCopy = gif => {
+    this.props.dispatch(actions.showNotification(`Copied ${gif.url}`));
+  };
+  
   render() {
     const {gifs, isFetching, error} = this.props;
     let content;

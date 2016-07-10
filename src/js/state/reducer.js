@@ -89,6 +89,23 @@ export default function reducer(state, action) {
           ids: {$set: newValue},
         }
       });
+  
+    case actions.SHOW_NOTIFICATION:
+      return update(state, {
+        notification: {
+          $set: {
+            msg: action.msg,
+            visible: true
+          }
+        }
+      });
+  
+    case actions.HIDE_NOTIFICATION:
+      return update(state, {
+        notification: {
+          visible: {$set: false}
+        }
+      });
     
   }
   return state;

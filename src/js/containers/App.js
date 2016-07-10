@@ -31,6 +31,7 @@ class App extends React.Component {
              {ActiveComponent}
         </div>
         <Toolbar items={toolbarItems} active={activeTab} onChange={this.onChangeTab}/>
+        <Notification msg={notification.msg} visible={notification.visible}/>
       </div>
     )
   }
@@ -40,6 +41,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     activeTab: state.tabs.active,
+    notification: state.notification,
     totalFavorites: _.keys(state.favorites.ids).length
   }
 };

@@ -9,6 +9,8 @@ export const FETCH_FAVORITES_REQUEST = "FETCH_FAVORITES_REQUEST";
 export const FETCH_FAVORITES_SUCCESS = "FETCH_FAVORITES_SUCCESS";
 export const FETCH_FAVORITES_ERROR = "FETCH_FAVORITES_ERROR";
 export const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
+export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
+export const HIDE_NOTIFICATION = "HIDE_NOTIFICATION";
 
 export const changeTab = tab => ({type: CHANGE_TAB, tab: tab});
 
@@ -52,5 +54,14 @@ export const fetchFavorites = () => async(dispatch) => {
     dispatch({type: FETCH_FAVORITES_ERROR, error: e});
   }
 };
+
+export const showNotification = msg => dispatch => {
+  dispatch({type: SHOW_NOTIFICATION, msg, visible: true});
+  hideNotification(dispatch);
+};
+
+const hideNotification = _.debounce(dispatch => {
+  dispatch({type: HIDE_NOTIFICATION});
+}, 3000);
 
 export const toggleFav = id => ({type: TOGGLE_FAVORITE, id});

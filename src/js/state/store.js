@@ -21,6 +21,10 @@ const initialState = {
     error: undefined,
     ids: {}
   },
+  notification: {
+    visible: false,
+    msg: ""
+  }
 };
 
 const store = createStore(
