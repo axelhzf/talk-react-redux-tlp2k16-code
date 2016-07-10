@@ -1,0 +1,62 @@
+.toolbar {
+  background-color: @darkBlue;
+  margin: 0;
+  color: @white;
+
+  ul {
+    display: flex;
+    list-style: none;
+  }
+
+  li {
+    flex: 1;
+
+    border-right: 1px solid @pink;
+
+    &:last-child {
+      border-right: none;
+    }
+
+  }
+
+  a {
+    display: block;
+    text-align: center;
+    color: @white;
+    text-decoration: none;
+    font-size: 28px;
+    padding: 17px;
+
+    &:hover {
+      color: @pink;
+    }
+  }
+
+  .active a {
+    color: @pink;
+  }
+
+  span {
+    position: relative;
+  }
+
+  .badge {
+    font-size: 14px;
+    background-color: @white;
+    color: @darkBlue;
+    padding: 5px;
+    border-radius: 15px;
+    margin-left: 10px;
+    position: absolute;
+    bottom: -15px;
+    right: -25px;
+    font-weight: bold;
+    font-family: sans-serif;
+  }
+
+  .active .badge, a:hover .badge {
+    background-color: #ff6473;
+    color: #fff;
+  }
+
+}
