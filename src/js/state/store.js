@@ -29,11 +29,22 @@ const initialState = {
 
 const store = createStore(
   reducer,
-  initialState,
+  _.merge(initialState, getStoredState()),
   compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
+
+store.subscribe(_.throttle(() => {
+  const state = store.getState();
+  storeState({
+    tabs: state.tabs,
+    favorites: {
+      ids: state.favorites.ids
+    }
+  });
+}, 1000));
+
 
 export default store;
