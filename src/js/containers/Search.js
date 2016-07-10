@@ -9,15 +9,32 @@ import EmptyPlaceholder from "../components/EmptyPlaceholder";
 import ErrorMessage from "../components/ErrorMessage";
 import gifs from "../fixtures/gifs";
 
-export default class Search extends React.Component {
+class Search extends React.Component {
+  
+  componentDidMount() {
+    const {query} = this.props;
+    this.props.dispatch(actions.fetchSearch(query));
+  }
   
   onChangeQuery = query => {
-    console.log("Change query", query)
+    this.props.dispatch(actions.fetchSearch(query));
   };
   
   render() {
-    const query = "";
-    const content = <GifList items={gifs} onToggleFav={this.onToggleFav} onCopy={this.onCopy}/>
+    const {gifs, isFetching, query, error} = this.props;
+    
+    let content;
+    if (query.trim().length === 0) {
+      content = <EmptyPlaceholder msg="Search something like 'Adventure time' "/>
+    } else if (isFetching) {
+      content = <LoadingIndicator/>
+    } else if (error) {
+      content = <ErrorMessage msg={error}/>
+    } else if (gifs.length === 0) {
+      content = <EmptyPlaceholder msg="No results. Search for something else."/>
+    } else {
+      content = <GifList items={gifs} onToggleFav={this.onToggleFav} onCopy={this.onCopy}/>
+    }
     
     return (
       <div className="search">
@@ -30,4 +47,15 @@ export default class Search extends React.Component {
   }
   
 }
+
+const mapStateToProps = state => {
+  return {
+    query: state.search.query,
+    isFetching: state.search.isFetching,
+    gifs: state.search.data,
+    error: state.search.error
+  }
+};
+
+export default connect(mapStateToProps)(Search)
 

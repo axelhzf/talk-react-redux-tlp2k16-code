@@ -10,6 +10,40 @@ export default function reducer(state, action) {
           active: {$set: action.tab}
         }
       });
+  
+    case actions.FETCH_SEARCH_REQUEST:
+      return update(state, {
+        search: {
+          $merge: {
+            query: action.query,
+            isFetching: true,
+            error: undefined,
+            data: []
+          }
+        }
+      });
+  
+    case actions.FETCH_SEARCH_SUCCESS:
+      const gifs = _.map(action.data, (gif) => ({id: gif.id, url: gif.images.fixed_height.url}));
+      return update(state, {
+        search: {
+          $merge: {
+            isFetching: false,
+            data: gifs
+          }
+        }
+      });
+  
+    case actions.FETCH_SEARCH_ERROR:
+      return update(state, {
+        search: {
+          $merge: {
+            isFetching: false,
+            error: action.error.message
+          }
+        }
+      });
+    
   }
   return state;
 }

@@ -6,7 +6,13 @@ import {storeState, getStoredState} from "./localStorage";
 const initialState = {
   tabs: {
     active: "search"
-  }
+  },
+  search: {
+    query: "",
+    isFetching: false,
+    data: [],
+    error: undefined
+  },
 };
 
 const store = createStore(
