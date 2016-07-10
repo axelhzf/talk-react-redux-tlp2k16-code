@@ -5,9 +5,11 @@ import _ from "lodash";
 export default function reducer(state, action) {
   switch (action.type) {
     case actions.CHANGE_TAB:
-      const newState = _.cloneDeep(state);
-      newState.tabs.active = action.tab;
-      return newState;
+      return update(state, {
+        tabs: {
+          active: {$set: action.tab}
+        }
+      });
   }
   return state;
 }
