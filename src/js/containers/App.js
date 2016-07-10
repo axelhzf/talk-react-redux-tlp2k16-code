@@ -19,7 +19,7 @@ class App extends React.Component {
     const {totalFavorites, notification, activeTab} = this.props;
     const toolbarItems = [
       {id: "search", iconClass: "fa fa-search", component: <Search/>},
-      {id: "favorite", iconClass: "fa fa-heart", badge: "0", component: <Favorite/>},
+      {id: "favorite", iconClass: "fa fa-heart", badge: totalFavorites, component: <Favorite/>},
     ];
     const toolbarItemsById = _.keyBy(toolbarItems, "id");
     const ActiveComponent = toolbarItemsById[activeTab].component;
@@ -40,6 +40,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     activeTab: state.tabs.active,
+    totalFavorites: _.keys(state.favorites.ids).length
   }
 };
 

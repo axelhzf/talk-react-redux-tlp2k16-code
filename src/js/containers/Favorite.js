@@ -13,6 +13,10 @@ class Favorite extends React.Component {
     this.props.dispatch(actions.fetchFavorites());
   }
   
+  onToggleFav = gif => {
+    this.props.dispatch(actions.toggleFav(gif.id));
+  };
+  
   render() {
     const {gifs, isFetching, error} = this.props;
     let content;
@@ -35,9 +39,17 @@ class Favorite extends React.Component {
 }
 
 const mapStateToProps = state => {
+  
+  const gifs = _.map(state.favorites.data, gif => {
+    return {
+      isFavorite: state.favorites.ids[gif.id],
+      ...gif
+    };
+  });
+  
   return {
     isFetching: state.favorites.isFetching,
-    gifs: state.favorites.data,
+    gifs,
     error: state.favorites.error
   }
 };

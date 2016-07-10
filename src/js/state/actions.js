@@ -8,6 +8,7 @@ export const FETCH_SEARCH_ERROR = "FETCH_SEARCH_ERROR";
 export const FETCH_FAVORITES_REQUEST = "FETCH_FAVORITES_REQUEST";
 export const FETCH_FAVORITES_SUCCESS = "FETCH_FAVORITES_SUCCESS";
 export const FETCH_FAVORITES_ERROR = "FETCH_FAVORITES_ERROR";
+export const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
 
 export const changeTab = tab => ({type: CHANGE_TAB, tab: tab});
 
@@ -35,7 +36,7 @@ export const fetchFavorites = () => async(dispatch) => {
     dispatch({type: FETCH_FAVORITES_REQUEST});
     
     const state = store.getState();
-    const ids = state.favorites.ids;
+    const ids = _.keys(state.favorites.ids);
     
     if (ids.length === 0) { // all ids already fetched
       return dispatch({type: FETCH_FAVORITES_SUCCESS, data: []});
@@ -50,3 +51,5 @@ export const fetchFavorites = () => async(dispatch) => {
     dispatch({type: FETCH_FAVORITES_ERROR, error: e});
   }
 };
+
+export const toggleFav = id => ({type: TOGGLE_FAVORITE, id});

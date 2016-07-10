@@ -20,6 +20,10 @@ class Search extends React.Component {
     this.props.dispatch(actions.fetchSearch(query));
   };
   
+  onToggleFav = gif => {
+    this.props.dispatch(actions.toggleFav(gif.id));
+  };
+  
   render() {
     const {gifs, isFetching, query, error} = this.props;
     
@@ -49,10 +53,18 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state => {
+  
+  const gifs = _.map(state.search.data, gif => {
+    return {
+      isFavorite: state.favorites.ids[gif.id],
+      ...gif
+    };
+  });
+  
   return {
     query: state.search.query,
     isFetching: state.search.isFetching,
-    gifs: state.search.data,
+    gifs,
     error: state.search.error
   }
 };

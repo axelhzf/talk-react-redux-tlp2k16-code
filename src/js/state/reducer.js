@@ -74,6 +74,19 @@ export default function reducer(state, action) {
           }
         }
       });
+  
+    case actions.TOGGLE_FAVORITE:
+      const id = action.id;
+      const isFavorite = state.favorites.ids[id];
+      const newValue = isFavorite ?
+        _.omit(state.favorites.ids, id) :
+      {[id]: true, ...state.favorites.ids};
+    
+      return update(state, {
+        favorites: {
+          ids: {$set: newValue},
+        }
+      });
     
   }
   return state;
