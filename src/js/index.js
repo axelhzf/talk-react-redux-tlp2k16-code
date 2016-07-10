@@ -7,7 +7,9 @@ import App from "./containers/App";
 import store from "./state/store";
 
 const RootComponent = (
+  <Provider store={store}>
     <App/>
+  </Provider>
 );
 
 ReactDOM.render(RootComponent, document.getElementById("container"));

@@ -9,19 +9,14 @@ import Notification from "../components/Notification";
 import * as actions from "../state/actions";
 import {mouseTrap} from "react-mousetrap"
 
-export default class App extends React.Component {
+class App extends React.Component {
   
-  state =  {
-    activeTab: "search"
-  };
-  
-  onChangeTab = newActiveTab => {
-    this.setState({activeTab: newActiveTab});
+  onChangeTab = tab => {
+    this.props.dispatch(actions.changeTab(tab));
   };
   
   render() {
-    const {activeTab} = this.state;
-    const {totalFavorites, notification} = this.props;
+    const {totalFavorites, notification, activeTab} = this.props;
     const toolbarItems = [
       {id: "search", iconClass: "fa fa-search", component: <Search/>},
       {id: "favorite", iconClass: "fa fa-heart", badge: "0", component: <Favorite/>},
@@ -40,3 +35,12 @@ export default class App extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = state => {
+  return {
+    activeTab: state.tabs.active,
+  }
+};
+
+export default connect(mapStateToProps)(App)
